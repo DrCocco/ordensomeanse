@@ -7,6 +7,19 @@ import shutil
 src_dir = "/home/fede/Documents/python/foto/"
 dst_dir = "/home/fede/Documents/python/ordered/"
 
+def move2unsorted(path):
+    print(f"moving {filename} in folder /Unsorted")
+    dst_unsorted =os.path.join(dst_dir,str("unsorted"))
+    dst_path = os.path.join(dst_unsorted,filename)
+    print(dst_path)
+
+    if not os.path.exists(dst_unsorted):
+        os.makedirs(dst_unsorted)
+
+    if not os.path.exists(dst_path):
+        shutil.move(path,dst_path)
+
+
 if not os.path.exists(dst_dir):
     os.makedirs(dst_dir)
 
@@ -46,22 +59,18 @@ for path in Path(src_dir).rglob('*'):
 
                 if not os.path.exists(dst_path):
                     shutil.move(path,dst_path)
-                    print(f"Spostato {filename} in {dst_month_dir}")
+                    print(f"Moved {filename} in {dst_month_dir}")
             else:
-                print(f"Non ho trovato EXIF nel file {filename}")
-                print(f"sposto il file {filename} nella cartella Unsorted")
+                print(f"Exif data not found in {filename}")
+                
+                move2unsorted(path)
 
-                dst_unsorted =os.path.join(dst_dir,str("unsorted"))
-                dst_path = os.path.join(dst_unsorted,filename)
-                print(dst_path)
+                
 
-                if not os.path.exists(dst_unsorted):
-                    os.makedirs(dst_unsorted)
-
-                if not os.path.exists(dst_path):
-                    shutil.move(path,dst_path)
-
-
+    if os.path.isdir(path): #Is it a dir?
+        if len(os.listdir(path))==0: #is it empty
+            print(f"{path} is an empty directory")
+            os.rmdir(path)
 
         #except:
         #    print("problemi problemi problemi")
