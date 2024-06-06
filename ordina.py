@@ -7,6 +7,8 @@ import shutil
 src_dir = "/home/fede/Documents/python/foto/"
 dst_dir = "/home/fede/Documents/python/ordered/"
 
+#viva la lasagna
+
 def move2unsorted(path):
     print(f"moving {filename} in folder /Unsorted")
     dst_unsorted =os.path.join(dst_dir,str("unsorted"))
